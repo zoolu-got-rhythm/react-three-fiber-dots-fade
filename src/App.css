@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+
+#canvas-container{
+  width: 300px;
+  height: 300px;
+  border: 2px solid green;
+  margin: 0 auto;
+}
