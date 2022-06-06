@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Canvas } from '@react-three/fiber';
-import { Box } from './Box';
+import { Dot } from './Dot';
 
 // curry
 function getRandomNumberInRangeFunction(min: number, max: number) {
@@ -22,6 +22,8 @@ function useForceUpdate(){
 function removeAndGetNewArr(arr: any[], index: number){
   return arr.slice(0, index).concat(arr.slice(index+1, arr.length));
 }
+
+
 
 function App() {
 
@@ -70,7 +72,7 @@ function App() {
 
       
       forceUpdate();
-    }, 2000);
+    }, 150);
   }, []);
 
 
@@ -90,7 +92,7 @@ function App() {
             <pointLight position={[10, 10, 10]} />
             {boxPositions.current.map((boxPos, i) => 
               {
-                return <Box 
+                return <Dot key={i}
                           position={[boxPos.x, boxPos.y, boxPos.z]} 
                           onDotHasFaded={() => {
                             console.log(`dot ${i} has faded`);
