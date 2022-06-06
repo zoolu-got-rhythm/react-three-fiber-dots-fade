@@ -1,25 +1,30 @@
 import * as THREE from 'three'
 import { createRoot } from 'react-dom/client'
 import React, { useEffect, useRef, useState } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, MeshProps, useFrame } from '@react-three/fiber'
 import { useOpacityFade } from './hooks/useOpacityFade'
 
+interface Dot extends MeshProps{
+  onDotHasFaded?: () => void;
+}
 
-export function Box(props: JSX.IntrinsicElements['mesh'], ) {
+export function Box({onDotHasFaded, ...props}: Dot) {
   const ref = useRef<THREE.Mesh>(null!)
   const [hovered, hover] = useState(false)
   const [clicked, click] = useState(false)
-  const [startFade, stopFade, opacityFadeUpdateFn] = useOpacityFade(ref.current, 1, onOpacityFadeEnded);
+  const [startFade, stopFade, opacityFadeUpdateFn] = useOpacityFade(ref.current, 0.3, onOpacityFadeEnded);
 
   function onOpacityFadeEnded(){
-    console.log(console.log("OPACITY FADE ENDED"));
+    // console.log(console.log("OPACITY FADE ENDED"));
+    if(onDotHasFaded)
+      onDotHasFaded();
   }
 
   useEffect(() => {
-    console.log("BOX USE EFFECT CALLED");
-    window.setTimeout(() => {
+    // console.log("BOX USE EFFECT CALLED");
+    // window.setTimeout(() => {
       startFade();
-    }, 500);
+    // }, 500);
   }, []);
   
   useFrame((state, delta) => {

@@ -19,17 +19,20 @@ function useForceUpdate(){
   return () => setValue(value => value + 1); // update the state to force render
 }
 
-
+function removeAndGetNewArr(arr: any[], index: number){
+  return arr.slice(0, index).concat(arr.slice(index+1, arr.length));
+}
 
 function App() {
 
-  console.log("app component render")
+  console.log("app component render");
 
   const forceUpdate = useForceUpdate();
 
   const getRand = getRandomNumberInRangeFunction(-1,1);
 
-  const boxPositions = useRef<any[]>([]);
+  let boxPositions = useRef<any[]>([]);
+  let boxPositionsThatNeedRemoving = useRef<number[]>([]);
 
   const nTimesUseEffectCalledIsCalled = useRef<number>(0);
 
@@ -39,10 +42,35 @@ function App() {
       return;
     nTimesUseEffectCalledIsCalled.current++; 
     window.setInterval(() => {
+      // boxPositions.current.shift();
+
+
       boxPositions.current.push({x: getRand(), y: getRand(), z: getRand()});
-      console.log(boxPositions.current);
+      
+      console.log("box positions marked for removal");
+      console.log(boxPositionsThatNeedRemoving.current);
+
+      // [...boxPositionsThatNeedRemoving.current].forEach((boxPos) => {
+      //   const newArr = removeAndGetNewArr(boxPositions.current, boxPositions.current.indexOf(boxPos));
+      //   console.log("new arr with removed boxPos");
+
+      //   boxPositionsThatNeedRemoving.current = 
+      //     removeAndGetNewArr(boxPositionsThatNeedRemoving.current, boxPositionsThatNeedRemoving.current.indexOf(boxPos));
+
+      //   boxPositions.current = newArr;
+      //   console.log("boxPositions new", boxPositions.current);
+
+      //   console.log("box pos's that need removing array")
+      //   console.log(boxPositionsThatNeedRemoving.current);
+
+      //   // console.log(boxPositions.current.indexOf(boxPos));
+        
+      // });
+
+
+      
       forceUpdate();
-    }, 1000);
+    }, 2000);
   }, []);
 
 
@@ -60,7 +88,15 @@ function App() {
           <Canvas>
             <ambientLight />
             <pointLight position={[10, 10, 10]} />
-            {boxPositions.current.map(boxPos => <Box position={[boxPos.x, boxPos.y, boxPos.z]} />)}
+            {boxPositions.current.map((boxPos, i) => 
+              {
+                return <Box 
+                          position={[boxPos.x, boxPos.y, boxPos.z]} 
+                          onDotHasFaded={() => {
+                            console.log(`dot ${i} has faded`);
+                            boxPositionsThatNeedRemoving.current.push(boxPos);
+                          }}/>
+              })}
           </Canvas>
         </div>
     </div>

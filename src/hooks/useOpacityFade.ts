@@ -41,25 +41,26 @@ export function useOpacityFade(meshRef: THREE.Mesh, durationInSeconds: number, o
     }
 
     function update(clock: Clock){
-        if(meshRef != null)
-            // @ts-ignore
-            if(meshRef.material.opacity == 0){
-                if(onOpacityFadeFinished && !onOpacityFadeCalled.current){
-                    onOpacityFadeCalled.current = true;
-                    onOpacityFadeFinished();
-                }
-                return;
+        if(meshRef == null)
+            return;
+        // @ts-ignore
+        if(meshRef.material.opacity == 0){
+            if(onOpacityFadeFinished && !onOpacityFadeCalled.current){
+                onOpacityFadeCalled.current = true;
+                onOpacityFadeFinished();
             }
+            return;
+        }
             
-            if(fade){
-                if(timeOfFadeStart.current == null)
-                    timeOfFadeStart.current = clock.getElapsedTime();
-                    
-                // @ts-ignore
-                meshRef.material.opacity = Math.max(1 - ((clock.getElapsedTime() - timeOfFadeStart.current) / durationInSeconds), 0); 
-                // @ts-ignore
-                console.log(meshRef.material.opacity);
-            }
+        if(fade){
+            if(timeOfFadeStart.current == null)
+                timeOfFadeStart.current = clock.getElapsedTime();
+                
+            // @ts-ignore
+            meshRef.material.opacity = Math.max(1 - ((clock.getElapsedTime() - timeOfFadeStart.current) / durationInSeconds), 0); 
+            // @ts-ignore
+            // console.log(meshRef.material.opacity);
+        }
     }
 
     return [startFade, stopFade, update];
