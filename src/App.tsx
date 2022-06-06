@@ -94,6 +94,7 @@ function App() {
               {
                 return <Dot key={i}
                           position={[boxPos.x, boxPos.y, boxPos.z]} 
+                          dotFadeTimeInSeconds={2}
                           onDotHasFaded={() => {
                             console.log(`dot ${i} has faded`);
                             boxPositionsThatNeedRemoving.current.push(boxPos);

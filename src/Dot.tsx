@@ -49,9 +49,10 @@ function getRoundedGeom(width: number, height: number, radius: number) {
 
 interface Dot extends MeshProps{
   onDotHasFaded?: () => void;
+  dotFadeTimeInSeconds: number;
 }
 
-export function Dot({onDotHasFaded, ...props}: Dot) {
+export function Dot({dotFadeTimeInSeconds, onDotHasFaded, ...props}: Dot) {
 
   let innerGeom = getRoundedGeom(1, 1, 0.5);
 
@@ -59,7 +60,7 @@ export function Dot({onDotHasFaded, ...props}: Dot) {
   const ref = useRef<THREE.Mesh>(null!)
   const [hovered, hover] = useState(false)
   const [clicked, click] = useState(false)
-  const [startFade, stopFade, opacityFadeUpdateFn] = useOpacityFade(ref.current, 0.8, onOpacityFadeEnded);
+  const [startFade, stopFade, opacityFadeUpdateFn] = useOpacityFade(ref.current, dotFadeTimeInSeconds, onOpacityFadeEnded);
 
   function onOpacityFadeEnded(){
     // console.log(console.log("OPACITY FADE ENDED"));
