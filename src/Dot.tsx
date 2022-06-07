@@ -53,10 +53,9 @@ interface Dot extends MeshProps{
   color: string;
 }
 
-export function Dot({dotFadeTimeInSeconds, onDotHasFaded, color, ...props}: Dot) {
+export function FadingDot({dotFadeTimeInSeconds, onDotHasFaded, color, ...props}: Dot) {
 
   let innerGeom = getRoundedGeom(1, 1, 0.5);
-
 
   const ref = useRef<THREE.Mesh>(null!)
   const [hovered, hover] = useState(false)
@@ -64,38 +63,20 @@ export function Dot({dotFadeTimeInSeconds, onDotHasFaded, color, ...props}: Dot)
   const [startFade, stopFade, opacityFadeUpdateFn] = useOpacityFade(ref.current, dotFadeTimeInSeconds, onOpacityFadeEnded);
 
   function onOpacityFadeEnded(){
-    // console.log(console.log("OPACITY FADE ENDED"));
     if(onDotHasFaded)
       onDotHasFaded();
   }
 
   useEffect(() => {
-    // console.log("BOX USE EFFECT CALLED");
-    // window.setTimeout(() => {
       startFade();
-    // }, 500);
   }, []);
   
   useFrame((state, delta) => {
       const time = state.clock.getElapsedTime();
       opacityFadeUpdateFn(state.clock);
-      // ref.current.rotation.x += 0.01;
-      // console.log("delta", delta);
-    
-    })
+  });
 
   return (
-    // <mesh
-    //   {...props}
-    //   ref={ref}
-    //   scale={clicked ? 1.5 : 1}
-    //   onClick={(event) => click(!clicked)}
-    //   onPointerOver={(event) => hover(true)}
-    //   onPointerOut={(event) => hover(false)}>
-    //   <boxGeometry args={[1, 1, 1]} />
-    //   <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} transparent/>
-    // </mesh>
-
     <mesh {...props} ref={ref} geometry={innerGeom}>
       <meshBasicMaterial
         color={color}
