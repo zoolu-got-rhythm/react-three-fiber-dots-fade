@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Canvas } from '@react-three/fiber';
-import { FadingDot } from './Dot';
+import { FadingDot } from './FadingDot';
 import { removeElementsAndGetNewArr } from './utils/removeArrayElement';
 import { useForceUpdate } from './hooks/useForceUpdate';
 
@@ -16,10 +16,7 @@ function getRandomNumberInRangeFunction(min: number, max: number) {
   }
 }
 
-
-
 function DemoApp() {
-
   console.log("app component render");
 
   const forceUpdate = useForceUpdate();

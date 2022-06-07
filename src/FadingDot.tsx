@@ -47,13 +47,13 @@ function getRoundedGeom(width: number, height: number, radius: number) {
   return geometry;
 }
 
-interface Dot extends MeshProps{
+interface FadingDotProps extends MeshProps{
   onDotHasFaded?: () => void;
   dotFadeTimeInSeconds: number;
   color: string;
 }
 
-export function FadingDot({dotFadeTimeInSeconds, onDotHasFaded, color, ...props}: Dot) {
+export function FadingDot({dotFadeTimeInSeconds, onDotHasFaded, color, ...props}: FadingDotProps) {
 
   let innerGeom = getRoundedGeom(1, 1, 0.5);
 
