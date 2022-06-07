@@ -93,6 +93,8 @@ function App() {
             {boxPositions.current.map((boxPos, i) => 
               {
                 return <Dot key={i}
+                          scale={0.5}
+                          color={"#0aff89"}
                           position={[boxPos.x, boxPos.y, boxPos.z]} 
                           dotFadeTimeInSeconds={2}
                           onDotHasFaded={() => {

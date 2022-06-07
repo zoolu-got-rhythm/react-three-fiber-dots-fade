@@ -50,9 +50,10 @@ function getRoundedGeom(width: number, height: number, radius: number) {
 interface Dot extends MeshProps{
   onDotHasFaded?: () => void;
   dotFadeTimeInSeconds: number;
+  color: string;
 }
 
-export function Dot({dotFadeTimeInSeconds, onDotHasFaded, ...props}: Dot) {
+export function Dot({dotFadeTimeInSeconds, onDotHasFaded, color, ...props}: Dot) {
 
   let innerGeom = getRoundedGeom(1, 1, 0.5);
 
@@ -95,9 +96,9 @@ export function Dot({dotFadeTimeInSeconds, onDotHasFaded, ...props}: Dot) {
     //   <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} transparent/>
     // </mesh>
 
-    <mesh {...props} ref={ref} geometry={innerGeom} scale={1}>
+    <mesh {...props} ref={ref} geometry={innerGeom}>
       <meshBasicMaterial
-        color={"#063687"}
+        color={color}
         side={THREE.DoubleSide}
         transparent
       />
