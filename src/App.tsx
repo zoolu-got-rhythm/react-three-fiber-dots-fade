@@ -5,16 +5,8 @@ import { Canvas } from '@react-three/fiber';
 import { FadingDot } from './FadingDot';
 import { removeElementsAndGetNewArr } from './utils/removeArrayElement';
 import { useForceUpdate } from './hooks/useForceUpdate';
+import { getRandomNumberInRangeFunction } from './utils/getRandomNumberInRangeFunction';
 
-// curry this function
-function getRandomNumberInRangeFunction(min: number, max: number) {
-  return () => {
-    let step1 = max - min;
-    let step2 = Math.random() * step1;
-    let result = step2 + min;
-    return result;
-  }
-}
 
 function DemoApp() {
   console.log("app component render");
